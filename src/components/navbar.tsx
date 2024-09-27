@@ -21,29 +21,10 @@ const Navbar = () => {
                 </div>
                 <Logo />
                 <div className=''>
-                    <button
-                        onClick={toggleDrawer}
-                        className='flex p-2 focus:outline-none'
-                    >
-                        <div className='relative w-10 h-6'>
-                            <span
-                                className={cn(
-                                    'absolute block w-10 h-0.5 bg-black/80 transition-all duration-300 ease-in-out',
-                                    isDrawerOpen
-                                        ? 'rotate-45 top-3'
-                                        : 'rotate-0 top-2'
-                                )}
-                            ></span>
-                            <span
-                                className={cn(
-                                    'absolute block w-10 h-0.5 bg-black/80 transition-all duration-300 ease-in-out',
-                                    isDrawerOpen
-                                        ? '-rotate-45 top-3'
-                                        : 'rotate-0 top-5'
-                                )}
-                            ></span>
-                        </div>
-                    </button>
+                    <MenuButton
+                        toggleDrawer={toggleDrawer}
+                        isDrawerOpen={isDrawerOpen}
+                    />
                     <Drawer
                         isOpen={isDrawerOpen}
                         toggleDrawer={toggleDrawer}
@@ -54,6 +35,36 @@ const Navbar = () => {
         </div>
     );
 };
+
+const MenuButton = ({
+    toggleDrawer,
+    isDrawerOpen,
+    className,
+}: {
+    toggleDrawer: () => void;
+    isDrawerOpen: boolean;
+    className?: string;
+}) => (
+    <button
+        onClick={toggleDrawer}
+        className={`flex p-2 focus:outline-none ${className}`}
+    >
+        <div className='relative w-10 h-6'>
+            <span
+                className={cn(
+                    'absolute block w-10 h-0.5 bg-black/80 transition-all duration-300 ease-in-out',
+                    isDrawerOpen ? 'rotate-45 top-3' : 'rotate-0 top-2'
+                )}
+            ></span>
+            <span
+                className={cn(
+                    'absolute block w-10 h-0.5 bg-black/80 transition-all duration-300 ease-in-out',
+                    isDrawerOpen ? '-rotate-45 top-3' : 'rotate-0 top-5'
+                )}
+            ></span>
+        </div>
+    </button>
+);
 
 const socialLinks = [
     { name: 'x', icon: '/images/social/x.svg', href: '#' },
@@ -94,25 +105,11 @@ const Drawer = ({
         } transition-transform duration-300 ease-in-out`}
     >
         <div className='p-4 flex flex-col h-full'>
-            <button
-                onClick={toggleDrawer}
-                className='flex justify-end mt-[4px] mr-[16px] p-2 focus:outline-none'
-            >
-                <div className='relative w-10 h-6'>
-                    <span
-                        className={cn(
-                            'absolute block w-10 h-0.5 bg-black/80 transition-all duration-300 ease-in-out',
-                            isOpen ? 'rotate-45 top-3' : 'rotate-0 top-2'
-                        )}
-                    ></span>
-                    <span
-                        className={cn(
-                            'absolute block w-10 h-0.5 bg-black/80 transition-all duration-300 ease-in-out',
-                            isOpen ? '-rotate-45 top-3' : 'rotate-0 top-5'
-                        )}
-                    ></span>
-                </div>
-            </button>
+            <MenuButton
+                toggleDrawer={toggleDrawer}
+                isDrawerOpen={isOpen}
+                className='justify-end mt-[4px] mr-[16px]'
+            />
             <div className='mt-14 space-y-4 flex flex-col items-center text-xl tracking-tight'>
                 <Logo className='mr-6 mb-8' />
                 {menuItems.map((item) => (
